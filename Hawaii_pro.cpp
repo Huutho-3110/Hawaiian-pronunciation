@@ -95,7 +95,7 @@ bool isVol(char c)
 bool isCon(char x)
 {
     // pkhlmnw
-    if (x == 'p' || x == 'k' || x == 'l' || x == 'm' || x == 'w' || x == 'h')
+    if (x == 'p' || x == 'k' || x == 'l' || x == 'm' || x == 'w' || x == 'h'||x == 'n')
     {
         return true;
     }
@@ -124,7 +124,7 @@ void solve(std::string sum)
 
     std::string result = "";
     // Check poit xem hoan thanh xong chua
-    for (int i = 0; i < s.length(); ++i)
+    for (std::size_t i = 0; i < s.size(); ++i)
     {
         if (isCon(s[i]))
         {
@@ -201,3 +201,4 @@ int main()
 
     solve(sum);
 }
+
