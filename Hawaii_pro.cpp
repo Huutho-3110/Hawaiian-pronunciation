@@ -9,32 +9,32 @@ w (after u or o) Pronounced as a w sound
 
 
 Vowel Pronunciation Rule
-a sounds like ah. eg. like that in “Austin” (ah-stin)
-e sounds like eh. eg. like that in “egg” (eh-gg)
-i sounds like ee. eg. like that in “bee”
-o sounds like oh. eg. like that in “obey” (oh-bay)
-u sounds like oo. eg. like that in “mood” (moo-d)
+a sounds like ah. eg. like that in "Austin" (ah-stin)
+e sounds like eh. eg. like that in "egg" (eh-gg)
+i sounds like ee. eg. like that in "bee"
+o sounds like oh. eg. like that in "obey" (oh-bay)
+u sounds like oo. eg. like that in "mood" (moo-d)
 
 
 Vowel groups Pronunciation Rule
-ai sounds like eye. eg. like that in “ice”
+ai sounds like eye. eg. like that in "ice"
 ae sounds like eye, same as ai
-ao sounds like ow. eg. like that in “how”
-au sounds like ow. eg. like that in “house”
-ei sounds like ay. eg. like that in “hay”
+ao sounds like ow. eg. like that in "how"
+au sounds like ow. eg. like that in "house"
+ei sounds like ay. eg. like that in "hay"
 eu sounds like eh-oo.
 iu sounds like ew.
 oi sounds like oy.
 ou sounds like ow.
-ui sounds like ooey. eg. like that in “gooey”
+ui sounds like ooey. eg. like that in "gooey"
 
 
 • Chương trình phải kiểm tra các từ chỉ chứa các ký tự hợp lệ trong tiếng Hawaii. Dấu cách và
-dấu nháy đơn (’) cũng được xem là hợp lệ.
+dấu nháy đơn (') cũng được xem là hợp lệ.
 • Nếu từ không hợp lệ, chương trình phải cảnh báo người dùng về các ký tự không hợp lệ.
 • Dấu cách biểu thị sự ngắt quãng giữa các từ và phải được giữ nguyên.
-• Dấu nháy đơn biểu thị sự ngắt quãng phát âm và phải được giữ nguyên trong từ. Ví dụ, từ a’i
-được phát âm là ah’ee. Nếu không có dấu nháy đơn, từ đó sẽ được phát âm thành eye.
+• Dấu nháy đơn biểu thị sự ngắt quãng phát âm và phải được giữ nguyên trong từ. Ví dụ, từ a'i
+được phát âm là ah'ee. Nếu không có dấu nháy đơn, từ đó sẽ được phát âm thành eye.
 • Không được phép sử dụng phương thức .replace(). Sinh viên phải xử lý các ký tự được nhập
 vào từng ký tự một theo đúng quy tắc.
 • Ngoài mảng (array), không được phép sử dụng các cấu trúc dữ liệu khác.
@@ -42,14 +42,15 @@ vào từng ký tự một theo đúng quy tắc.
 trả về một kiểu số không dấu (size_t), trong khi int là số có dấu.
 
 Trong bài tập này, sinh viên sẽ viết một chương trình nhận vào một từ tiếng Hawaii và xuất ra
-cách phát âm của từ đó theo đúng quy tắc ngữ âm. Ví dụ, từ humuhumunukunukuapua’a sẽ được phát
-âm thành hoo-moo-hoo-moo-noo-koo-noo-koo-ah-poo-ah’ah.
+cách phát âm của từ đó theo đúng quy tắc ngữ âm. Ví dụ, từ humuhumunukunukuapua'a sẽ được phát
+âm thành hoo-moo-hoo-moo-noo-koo-noo-koo-ah-poo-ah'ah.
 
 */
 
 #include <iostream>
 #include <string>
 #include <cctype>
+
 std::string change(char c)
 {
     if (c == 'a')
@@ -64,6 +65,7 @@ std::string change(char c)
         return "oo";
     return std::string(1, c);
 }
+
 std::string changeCombo(std::string x)
 {
     if (x == "ai" || x == "ae")
@@ -84,6 +86,7 @@ std::string changeCombo(std::string x)
         return "ooey";
     return std::string(x);
 }
+
 bool isVol(char c)
 {
     if (c == 'e' || c == 'u' || c == 'a' || c == 'i' || c == 'o')
@@ -92,18 +95,19 @@ bool isVol(char c)
     }
     return false;
 }
+
 bool isCon(char x)
 {
     // pkhlmnw
-    if (x == 'p' || x == 'k' || x == 'l' || x == 'm' || x == 'w' || x == 'h'||x == 'n')
+    if (x == 'p' || x == 'k' || x == 'l' || x == 'm' || x == 'w' || x == 'h' || x == 'n')
     {
         return true;
     }
     return false;
 }
+
 void solve(std::string sum)
 {
-
     std::string s = "";
     for (std::size_t i = 0; i < sum.size(); ++i)
     {
@@ -117,31 +121,75 @@ void solve(std::string sum)
 
         if (!isVol(x) && !isCon(x) && x != ' ' && x != '\'')
         {
-            std::cout << s << " contains invalid characters.";
+            std::cout << sum << " contains invalid characters." << std::endl;
             return;
         }
     }
 
     std::string result = "";
-    // Check poit xem hoan thanh xong chua
+
     for (std::size_t i = 0; i < s.size(); ++i)
     {
-        if (isCon(s[i]))
-        {
-            if (s[i] == 'w' && i > 0 && i < s.size() - 1)
-            {
-                if (s[i - 1] == 'e' || s[i - 1] == 'i')
-                {
-                    s[i] = 'v';
-                }
-            }
-            result += s[i];
-        }
-
+        // Xu ly dau cach
         if (s[i] == ' ')
         {
             result += s[i];
+            continue;
         }
+
+        // Xu ly dau nhay don - xoa dau gach truoc neu co
+        if (s[i] == '\'')
+        {
+            if (result.length() > 0 && result[result.length() - 1] == '-')
+            {
+                result = result.substr(0, result.length() - 1);
+            }
+            result += '\'';
+            continue;
+        }
+
+        // Xu ly phu am
+        if (isCon(s[i]))
+        {
+            if (s[i] == 'w')
+            {
+                // Tim nguyen am gan w nhat - bo qua dau cach va dau nhay
+                int j = i - 1;
+                while (j >= 0 && (s[j] == ' ' || s[j] == '\''))
+                {
+                    j--;
+                }
+
+                if (j < 0)
+                {
+                    // W la tu bat dau cua ki tu
+                    result += 'w';
+                }
+                else
+                {
+                    char prev = s[j];
+                    if (prev == 'i' || prev == 'e') // neu truoc do la i va e
+                    {
+                        result += 'v';
+                    }
+                    else if (prev == 'a' || prev == 'u' || prev == 'o') // neu truoc do la a u o
+                    {
+                        result += 'w';
+                    }
+                    else
+                    {
+                        result += 'w';
+                    }
+                }
+            }
+            else // Khong phai w
+            {
+                result += s[i];
+            }
+            continue;
+        }
+
+        // Xu ly nguyen am - dau nhay - nguyen am
         if (i + 2 < s.length() && isVol(s[i]) && s[i + 1] == '\'' && isVol(s[i + 2]))
         {
             result += change(s[i]);
@@ -155,16 +203,18 @@ void solve(std::string sum)
                 result += '-';
             }
 
-            continue; // Jump to next iteration
+            continue; // skip toi vong for tiep theo
         }
-        bool foundCombo = false; // Chck point coi nhu ban dau khong co combo nao de convert
+
+        // Xu ly cap nguyen am
+        bool foundCombo = false;
         if (i < s.length() - 1 && isVol(s[i]) && isVol(s[i + 1]))
         {
-            std::string temp = ""; // Bien temp se la bien de ket noi 2 ki tu lien tiep
+            std::string temp = "";
             temp += s[i];
             temp += s[i + 1];
-            std::string convert = changeCombo(temp); // Chuyen doi bien temp
-            if (convert != temp)                     // Neu bien temp sau khi chuyen doi khac bien temp ban dau thi no chinh la 1 combo
+            std::string convert = changeCombo(temp);
+            if (convert != temp)
             {
                 result += convert;
                 ++i;
@@ -173,10 +223,12 @@ void solve(std::string sum)
                     result += '-';
                 }
 
-                foundCombo = true; // Sau khi tim thay 1 combo thi true
+                foundCombo = true;
             }
         }
-        if (!foundCombo) // Neu khong tim thay combo
+
+        // Xu ly nguyen am don
+        if (!foundCombo)
         {
             if (isVol(s[i]))
             {
@@ -189,16 +241,20 @@ void solve(std::string sum)
         }
     }
 
-    std::cout << result << "\n";
+    // Xoa dau gach cuoi cung neu co
+    if (result.length() > 0 && result[result.length() - 1] == '-')
+    {
+        result = result.substr(0, result.length() - 1);
+    }
+
+    std::cout << result << std::endl;
 }
 
 int main()
-
 {
-    std::string sum;
+    std::string word;
 
-    std::getline(std::cin, sum);
+    std::getline(std::cin, word);
 
-    solve(sum);
+    solve(word);
 }
-
